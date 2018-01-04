@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     SeekBar sb;
     TextView tv2;
 
+    int pi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,5 +137,34 @@ public class MainActivity extends AppCompatActivity {
     public void click4(View v)
     {
         pb2.setProgress(pb2.getProgress() + 10);
+    }
+
+    public void clickGo(View v)
+    {
+        new Thread()
+        {
+            @Override
+            public void run() {
+                super.run();
+
+                for (pi = 0; pi < 100; pi++)
+                {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pb2.setProgress(pi);
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+        }.start();
     }
 }
